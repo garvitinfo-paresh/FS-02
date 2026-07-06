@@ -1,0 +1,26 @@
+/* #img1 {
+    width: 100px;
+    height: auto;
+    padding: 10px;
+    float: right;
+}
+
+#img2 {
+    width: 100px;
+    height: auto;
+    padding: 10px;
+    float: left;
+} */
+ul {
+    background-color: green;
+    list-style-type: none;
+    /* border: 1px solid red; */
+    overflow: auto;
+}
+
+li {
+    color: white;
+    padding: 5px 10px;
+    float: left;
+    /* display: inline; */
+}

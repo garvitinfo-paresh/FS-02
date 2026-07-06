@@ -1,0 +1,75 @@
+/*ol {
+    /* list-style-type: decimal-leading-zero; 
+    list-style-image: url('img/point.png');
+    list-style-position: outside;
+}
+
+li {
+    border: 2px solid black;
+}
+
+#parent {
+    color: red;
+}
+
+#Green {
+    color: green;
+}
+
+#inital {
+    color: initial;
+}
+
+#inherit {
+    color: inherit;
+} */
+/* li:first-child {
+    color: red;
+}
+
+li:last-child {
+    color: blue;
+} */
+/* li:nth-child(2n+0) {
+    color: darkblue;
+} */
+/* input:focus {
+    border: 4px solid green;
+} */
+
+/* h1::before {
+    content: url(img/point.png);
+}
+
+h1::after {
+    content: "hiiii FSO2 Students";
+} */
+/* p::selection {
+    background-color: yellow;
+    color: red;
+} */
+/* p::first-letter {
+    font-size: 30px;
+    color: darkmagenta;
+} */
+/* p::first-line {
+    color: red;
+} */
+/* html {
+    border: 2px solid blue;
+} */
+
+.div {
+    width: 40%;
+    height: 50px;
+    border: 1px solid red;
+    /* display: inline-block; */
+    /*block inline inline-block*/
+}
+
+#div1 {
+    /* display: none;
+    height: 250px; */
+    /* visibility: hidden; */
+
+}

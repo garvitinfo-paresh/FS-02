@@ -1,0 +1,21 @@
+table {
+    border: 2px solid red;
+    /* border-collapse: collapse; */
+    /* empty-cells: hide; */
+}
+
+caption {
+    border: 2px solid black;
+    /* caption-side: bottom; */
+}
+
+td {
+    border: 2px solid black;
+    height: 30px;
+    text-align: right;
+}
+
+
+th {
+    border: 2px solid black;
+}

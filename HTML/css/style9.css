@@ -1,0 +1,99 @@
+/* #div {
+
+    height: 200px;
+    width: 200px;
+    border: 2px solid black;
+    background-color: red;
+    margin: 150px;
+    transition-property: width;
+    transition-duration: 2s;
+    transition-delay: 2s;
+}
+
+#div:hover {
+     background-color: yellow; 
+    width: 300px;
+} */
+
+/* #div1 {
+    height: 200px;
+    width: 200px;
+    background-color: lawngreen;
+    transform: perspective(300px) rotate3d(0, 50, 0, 50deg); 
+    transform: perspective(300px) translate3d(50px, 25px, 0px);
+} */
+
+#div {
+
+    height: 200px;
+    width: 200px;
+    border: 2px solid black;
+    background-color: red;
+    animation-name: changeColor;
+    animation-duration: 1s;
+    animation-delay: 4s;
+    animation-iteration-count: 3;
+
+}
+
+@keyframes changeColor {
+
+    /* from {
+        background-color: red;
+    }
+
+    to {
+        background-color: yellow;
+    } */
+    0% {
+        background-color: red;
+        width: 300px;
+        /* border-radius: 0%; */
+    }
+
+    25% {
+        background-color: yellow;
+        width: 400px;
+        /* border-radius: 10%; */
+    }
+
+    50% {
+        background-color: blue;
+        width: 500px;
+        /* border-radius: 20%; */
+    }
+
+    75% {
+        background-color: green;
+        width: 600px;
+        /* border-radius: 30%; */
+    }
+
+    /* 50% {
+        background-color: darkmagenta;
+        border-radius: 50%;
+    }
+
+    40% {
+        background-color: green;
+        border-radius: 40%;
+    }
+
+    40% {
+        background-color: blue;
+        border-radius: 30%;
+    }
+
+    40% {
+        background-color: yellow;
+        border-radius: 20%;
+    } */
+    /* 
+    40% {
+        background-color: red;
+        border-radius: 0%;
+    } */
+
+
+
+}

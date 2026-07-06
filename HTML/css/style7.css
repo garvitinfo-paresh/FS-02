@@ -1,0 +1,36 @@
+#div1 {
+    width: 70%;
+    height: 150px;
+    background-color: yellow;
+    float: left;
+    /* display: inline-block; */
+}
+
+#div2 {
+    width: 30%;
+    height: 100px;
+    background-color: green;
+    float: left;
+    /* display: inline-block; */
+}
+
+#div3 {
+
+    /* height: 100px;
+    width: 30%; */
+    /* margin-top: 20px; */
+    background-color: blueviolet;
+    clear: both;
+    /* border: 2px solid red; */
+}
+
+#img1 {
+    float: right;
+    height: 100px;
+}
+
+#img2 {
+    float: right;
+    height: 100px;
+    clear: right;
+}
