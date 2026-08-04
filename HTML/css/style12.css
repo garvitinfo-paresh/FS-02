@@ -1,0 +1,31 @@
+/* h1 {
+    color: red;
+} */
+/* a[href="https://www.google.com"] {
+    color: red;
+} */
+/* Attribute selector */
+/* input[type="password"] {
+    color: yellow;
+} */
+/* universal */
+/* * {
+    border: 1px solid red;
+} */
+/* Adjust selector */
+/* div a {
+    color: lawngreen;
+} */
+/* direct child */
+/* div>a {
+    color: red;
+} */
+/* just sibling */
+/* div+a {
+    color: red;
+} */
+/* multiple selector */
+/* h1,
+p {
+    color: yellow;
+} */
