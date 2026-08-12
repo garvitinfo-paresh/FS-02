@@ -406,8 +406,8 @@ FOREIGN KEY Syntax
 CREATE TABLE <table-name> (
     col-1 int NOT NULL PRIMARY KEY,
     col-2 int,
-    CONSTRAINT <contstraint-name> 
-    FOREIGN KEY (col of this table  ) REFERENCES <reference-table>(col reference-table-column)
+    CONSTRAINT <contstraint-name> FOREIGN KEY (col of this table  ) REFERENCES <reference-table>(col reference-table-column)
+    CONSTRAINT <contstraint-name> CHECK <Expression>
 );
 
 
@@ -468,6 +468,69 @@ Analyze production, machine, inventory, quality, maintainance
 
       production table
       ---------------
+
+-- 12-08-2026
+
+mysql> select sum(product_cost) "Total sum of products" from products;
++-----------------------+
+| Total sum of products |
++-----------------------+
+|               1261.95 |
++-----------------------+
+
+1 row in set (0.005 sec)
+mysql> select avg(product_cost) from products;
++-------------------+
+| avg(product_cost) |
++-------------------+
+|         84.130000 |
++-------------------+
+1 row in set (0.006 sec)
+
+mysql> select min(product_cost) from products;
++-------------------+
+| min(product_cost) |
++-------------------+
+|              0.25 |
++-------------------+
+1 row in set (0.105 sec)
+
+mysql> select max(product_cost) from products;
++-------------------+
+| max(product_cost) |
++-------------------+
+|            600.00 |
++-------------------+
+1 row in set (0.007 sec)
+
+
+mysql> select count(*) from products where category = 'container';
++----------+
+| count(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.108 sec)
+
+
+mysql>  select distinct category from products;
++-----------+
+| category  |
++-----------+
+| container |
+| holdings  |
+| packaging |
++-----------+
+3 rows in set (0.112 sec)
+
+mysql>  select count(distinct category) from products;
++--------------------------+
+| count(distinct category) |
++--------------------------+
+|                        3 |
++--------------------------+
+1 row in set (0.008 sec)
+
 
 */
 
