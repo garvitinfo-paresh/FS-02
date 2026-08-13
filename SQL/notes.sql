@@ -532,6 +532,180 @@ mysql>  select count(distinct category) from products;
 1 row in set (0.008 sec)
 
 
+--13-08-2026
+----------
+
+select column, agg_func(agg_col)
+from <table-name>
+where <expression>  --optional
+group by column
+
+-----------------------
+
+select product_id,category,sum(product_cost)
+from products 
+group by category;
+
+
+mysql> select produciton_date,sum(units_produced),sum(units_defective) from production group by produciton_date;
++-----------------+---------------------+----------------------+
+| produciton_date | sum(units_produced) | sum(units_defective) |
++-----------------+---------------------+----------------------+
+| 2026-07-07      |               57650 |                 6050 |
+| 2026-07-08      |                8500 |                  165 |
+| 2026-07-09      |               65000 |                  450 |
+| 2026-07-10      |                9500 |                   65 |
+| 2026-07-11      |                 200 |                    2 |
++-----------------+---------------------+----------------------+
+5 rows in set (0.008 sec)
+
+mysql> select produciton_date,avg(units_produced),avg(units_defective) from production group by produciton_date;
++-----------------+---------------------+----------------------+
+| produciton_date | avg(units_produced) | avg(units_defective) |
++-----------------+---------------------+----------------------+
+| 2026-07-07      |          19216.6667 |            2016.6667 |
+| 2026-07-08      |           4250.0000 |              82.5000 |
+| 2026-07-09      |          32500.0000 |             225.0000 |
+| 2026-07-10      |           4750.0000 |              32.5000 |
+| 2026-07-11      |            200.0000 |               2.0000 |
++-----------------+---------------------+----------------------+
+5 rows in set (0.134 sec)
+
+select produciton_date,sum(units_produced),sum(units_defective) 
+from production 
+group by produciton_date
+having sum(units_produced) < 10000  ;
+
+
+select produciton_date,sum(units_produced),sum(units_defective) 
+from production 
+where machine_id <> 1001
+group by produciton_date
+having sum(units_produced) > 10000  ;
+
+create database forjoin;
+---------------------------
+
+create table table_1(tab_1_col_1 int,tab_1_col_2 varchar(5));
+table_1                 
+insert into table_1 values (1,'A');
+insert into table_1 values (2,'B'); 
+insert into table_1 values (3,'D'); 
+insert into table_1 values (4,'F'); 
+insert into table_1 values (5,'Z'); 
+
+create table table_2(tab_2_col_1 int,tab_2_col_2 varchar(5));
+table_2
+insert into table_2 values(11,'B');
+insert into table_2 values(12,'C');
+insert into table_2 values(13,'D');
+insert into table_2 values(14,'P');
+insert into table_2 values(15,'Q');
+
+--Inner join  - common records
+select *
+ from table_2 t2
+ left join table_1 t1
+ on t1.tab_1_col_2 = t2.tab_2_col_2;
+
+--Left join  - 
+select *
+ from table_1 t1
+ right outer join table_2 t2
+ on t1.tab_1_col_2 = t2.tab_2_col_2
+ where  t1.tab_1_col_2 is null;
+
+
+mysql>
+mysql> select *
+    ->  from table_1 t1
+    ->  inner join table_2 t2
+    ->  on t1.tab_1_col_2 = t2.tab_2_col_2;
++-------------+-------------+-------------+-------------+
+| tab_1_col_1 | tab_1_col_2 | tab_2_col_1 | tab_2_col_2 |
++-------------+-------------+-------------+-------------+
+|           2 | B           |          11 | B           |
+|           3 | D           |          13 | D           |
++-------------+-------------+-------------+-------------+
+2 rows in set (0.109 sec)
+
+mysql> select *
+    ->  from table_1 t1
+    ->  left join table_2 t2
+    ->  on t1.tab_1_col_2 = t2.tab_2_col_2;
++-------------+-------------+-------------+-------------+
+| tab_1_col_1 | tab_1_col_2 | tab_2_col_1 | tab_2_col_2 |
++-------------+-------------+-------------+-------------+
+|           1 | A           |        NULL | NULL        |
+|           2 | B           |          11 | B           |
+|           3 | D           |          13 | D           |
+|           4 | F           |        NULL | NULL        |
+|           5 | Z           |        NULL | NULL        |
++-------------+-------------+-------------+-------------+
+5 rows in set (0.107 sec)
+
+mysql> select *
+    ->  from table_1 t1
+    ->  left outer join table_2 t2
+    ->  on t1.tab_1_col_2 = t2.tab_2_col_2;
++-------------+-------------+-------------+-------------+
+| tab_1_col_1 | tab_1_col_2 | tab_2_col_1 | tab_2_col_2 |
++-------------+-------------+-------------+-------------+
+|           1 | A           |        NULL | NULL        |
+|           2 | B           |          11 | B           |
+|           3 | D           |          13 | D           |
+|           4 | F           |        NULL | NULL        |
+|           5 | Z           |        NULL | NULL        |
++-------------+-------------+-------------+-------------+
+5 rows in set (0.006 sec)
+
+mysql>
+mysql> select *
+    ->  from table_1 t1
+    ->  right outer join table_2 t2
+    ->  on t1.tab_1_col_2 = t2.tab_2_col_2;
++-------------+-------------+-------------+-------------+
+| tab_1_col_1 | tab_1_col_2 | tab_2_col_1 | tab_2_col_2 |
++-------------+-------------+-------------+-------------+
+|           2 | B           |          11 | B           |
+|        NULL | NULL        |          12 | C           |
+|           3 | D           |          13 | D           |
+|        NULL | NULL        |          14 | P           |
+|        NULL | NULL        |          15 | Q           |
++-------------+-------------+-------------+-------------+
+5 rows in set (0.012 sec)
+
+--only left table
+mysql> select *
+    ->  from table_1 t1
+    ->  left outer join table_2 t2
+    ->  on t1.tab_1_col_2 = t2.tab_2_col_2
+    ->  where  t2.tab_2_col_2 is null;
++-------------+-------------+-------------+-------------+
+| tab_1_col_1 | tab_1_col_2 | tab_2_col_1 | tab_2_col_2 |
++-------------+-------------+-------------+-------------+
+|           1 | A           |        NULL | NULL        |
+|           4 | F           |        NULL | NULL        |
+|           5 | Z           |        NULL | NULL        |
++-------------+-------------+-------------+-------------+
+3 rows in set (0.009 sec)
+
+
+--Only right
+mysql> select *
+    ->  from table_1 t1
+    ->  right outer join table_2 t2
+    ->  on t1.tab_1_col_2 = t2.tab_2_col_2
+    ->  where  t1.tab_1_col_2 is null;
++-------------+-------------+-------------+-------------+
+| tab_1_col_1 | tab_1_col_2 | tab_2_col_1 | tab_2_col_2 |
++-------------+-------------+-------------+-------------+
+|        NULL | NULL        |          12 | C           |
+|        NULL | NULL        |          14 | P           |
+|        NULL | NULL        |          15 | Q           |
++-------------+-------------+-------------+-------------+
+3 rows in set (0.013 sec)
+
 */
 
 

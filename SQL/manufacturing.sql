@@ -14,7 +14,7 @@
 
     --   products table
       ---------------      
-      CREATE TABLE products_temp(
+      CREATE TABLE products(
       product_id INT PRIMARY KEY,
       product_name VARCHAR(75),
       category VARCHAR(50),
