@@ -595,12 +595,20 @@ insert into table_1 values (4,'F');
 insert into table_1 values (5,'Z'); 
 
 create table table_2(tab_2_col_1 int,tab_2_col_2 varchar(5));
+
 table_2
 insert into table_2 values(11,'B');
 insert into table_2 values(12,'C');
 insert into table_2 values(13,'D');
 insert into table_2 values(14,'P');
 insert into table_2 values(15,'Q');
+
+create table table_3(tab_3_col_1 int,tab_3_col_2 varchar(5));
+insert into table_3 values(111,'A');
+insert into table_3 values(112,'B');
+insert into table_3 values(113,'M');
+insert into table_3 values(114,'P');
+insert into table_3 values(115,'Z');
 
 --Inner join  - common records
 select *
@@ -698,13 +706,127 @@ mysql> select *
     ->  on t1.tab_1_col_2 = t2.tab_2_col_2
     ->  where  t1.tab_1_col_2 is null;
 +-------------+-------------+-------------+-------------+
-| tab_1_col_1 | tab_1_col_2 | tab_2_col_1 | tab_2_col_2 |
+| tab_1_col_1 |  | tab_2_col_1 | tab_2_col_2 |
 +-------------+-------------+-------------+-------------+
 |        NULL | NULL        |          12 | C           |
 |        NULL | NULL        |          14 | P           |
 |        NULL | NULL        |          15 | Q           |
 +-------------+-------------+-------------+-------------+
 3 rows in set (0.013 sec)
+
+
+
+select *
+from table_1 t1
+left join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+inner join table_3 t3 on t2.tab_2_col_2 = t3.tab_3_col_2;
+
+
+mysql> select *
+    -> from table_1 t1
+    -> inner join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+    -> inner join table_3 t3 on t2.tab_2_col_2 = t3.tab_3_col_2;
++-------------+-------------+-------------+-------------+-------------+-------------+
+| tab_1_col_1 | tab_1_col_2 | tab_2_col_1 | tab_2_col_2 | tab_3_col_1 | tab_3_col_2 |
++-------------+-------------+-------------+-------------+-------------+-------------+
+|           2 | B           |          11 | B           |         112 | B           |
++-------------+-------------+-------------+-------------+-------------+-------------+
+1 row in set (0.024 sec)
+
+
+
+select * from table_1;
+select * from table_2;
+select * from table_3;
+
+-- ALTER TABLE table_11
+-- RENAME  TO table_1;   
+
+
+select *
+from table_1 t1
+left join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+inner join table_3 t3 on t2.tab_2_col_2 = t3.tab_3_col_2;
+
+
+select *
+from table_1 t1
+left join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+inner join table_3 t3 on t2.tab_1_col_2 = t3.tab_3_col_2;
+
+
+mysql> select *
+    -> from table_1 t1
+    -> left join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+    -> inner join table_3 t3 on t2.tab_2_col_2 = t3.tab_3_col_2;
++-------------+-------------+-------------+-------------+-------------+-------------+
+| tab_1_col_1 | tab_1_col_2 | tab_2_col_1 | tab_2_col_2 | tab_3_col_1 | tab_3_col_2 |
++-------------+-------------+-------------+-------------+-------------+-------------+
+|           2 | B           |          11 | B           |         112 | B           |
++-------------+-------------+-------------+-------------+-------------+-------------+
+1 row in set (0.005 sec)
+
+mysql>
+mysql> select *
+    -> from table_1 t1
+    -> left join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+    -> inner join table_3 t3 on t1.tab_1_col_2 = t3.tab_3_col_2;
++-------------+-------------+-------------+-------------+-------------+-------------+
+| tab_1_col_1 | tab_1_col_2 | tab_2_col_1 | tab_2_col_2 | tab_3_col_1 | tab_3_col_2 |
++-------------+-------------+-------------+-------------+-------------+-------------+
+|           1 | A           |        NULL | NULL        |         111 | A           |
+|           2 | B           |          11 | B           |         112 | B           |
+|           5 | Z           |        NULL | NULL        |         115 | Z           |
++-------------+-------------+-------------+-------------+-------------+-------------+
+3 rows in set (0.008 sec)
+
+select *
+from table_1 t1
+inner join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+left join table_3 t3 on t2.tab_2_col_2 = t3.tab_3_col_2
+
+left join table_4 t4 on t4.tab_4_col_2 = t3.tab_3_col_2;
+
+
+select *
+from table_1 t1
+inner join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+left join table_3 t3 on t1.tab_1_col_2 = t3.tab_3_col_2;
+
+-------------
+
+select *
+from table_1 t1
+left join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+inner join table_3 t3 on t2.tab_2_col_2 = t3.tab_3_col_2;
+
+select *
+from table_1 t1
+left join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+inner join table_3 t3 on t1.tab_1_col_2 = t3.tab_3_col_2;
+
+--------------------
+
+select *
+from table_1 t1
+left join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+left join table_3 t3 on t2.tab_2_col_2 = t3.tab_3_col_2;
+
+
+select *
+from table_1 t1
+left join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+left join table_3 t3 on t1.tab_1_col_2 = t3.tab_3_col_2;
+
+------
+
+select *
+from table_1 t1
+inner join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2 
+inner join table_3 t3 on t1.tab_1_col_2 = t3.tab_3_col_2;
+
+
+
 
 */
 

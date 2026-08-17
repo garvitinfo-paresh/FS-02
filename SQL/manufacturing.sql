@@ -25,7 +25,7 @@
     --   machine table
     --   ---------------
 
-      CREATE TABLE machine_temp(
+      CREATE TABLE machine(
       machine_id INT PRIMARY KEY,
       machine_name VARCHAR(75),
       production_line VARCHAR(50),
@@ -137,6 +137,12 @@
       (1109,5001,1008,'2026-07-10',1500,15,8.0),
       (1110,2003,1009,'2026-07-11',200,2,16.0);
       
+      INSERT INTO production VALUES
+      (1111,1005,1005,'2026-07-15',15000,300,18.0),
+      (1112,3002,1006,'2026-07-16',50000,150,10.0),
+      (1113,4001,1007,'2026-07-17',8000,50,14.5),
+      (1114,5001,1008,'2026-07-18',1500,15,8.0),
+      (1115,2003,1009,'2026-07-18',200,2,16.0);
 --  maintainance table
     --------------------
 
@@ -148,4 +154,92 @@
       (5,1005,'2026-07-20','Sensor calibration and alignment',1.00,75.00),
       (6,1007,'2026-07-22','Motor overheating repair',6.50,1200.00),
       (7,1010,'2026-08-01','Annual deep cleaning',12.00,800.00);
+
+
+
+-- SELECT
+--          p.production_id,
+--          pr.product_name,
+--          p.produciton_date,
+--          p.units_produced,
+--          p.units_defective
+--      FROM production p
+--      JOIN products pr
+--          ON p.product_id = pr.product_id;
+
+
+SELECT *   
+FROM production p
+JOIN products pr ON p.product_id = pr.product_id;
+
+
+
+select *
+from table_1 t1
+inner join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
+left join table_3 t3 on t1.tab_1_col_2 = t3.tab_3_col_2;
+
+
+SELECT  *
+FROM products pr
+left JOIN production p ON p.product_id = pr.product_id
+JOIN machine mch ON  mch.machine_id = pr.machine_id;
+
+
+
+SELECT 
+    p.production_id,
+    pr.product_name,
+    m.machine_name,
+    p.produciton_date,
+    p.units_produced
+FROM products pr
+JOIN production p ON p.product_id = pr.product_id
+JOIN machine m ON p.machine_id = m.machine_id
+join maintainance mt ON m.machine_id = mt.machine_id;
+
+    p.product_id,
+    mch.machine_id,
+    pr.production_id,
+    pr.product_name,
+    p.produciton_date,
+    p.units_produced,
+    p.units_defective,
+    mch.machine_name,
+
+
+SELECT count(*)
+FROM products pr
+left JOIN production p ON p.product_id = pr.product_id;
+
+SELECT count(*)
+FROM production p
+LEFT JOIN products pr ON p.product_id = pr.product_id
+LEFT JOIN machine m ON p.machine_id = m.machine_id
+
+
+SELECT  *
+FROM products pr
+left JOIN production p ON p.product_id = pr.product_id
+JOIN machine mch ON   p.machine_id =mch.machine_id ;
+
+
+-- * Total units produced by each product 
+
+SELECT
+    pr.product_id,
+    pr.product_name,
+    p.units_produced
+FROM products pr
+INNER JOIN production p ON p.product_id = pr.product_id
+
+
+-- Total defective units produced by each product 
+-- Average Prodution Duration by each mahchine
+-- Total production by each mahchine
+-- Total maintainance cost per mahchine
+-- Find products produced more than 10000 units
+
+
+
 
