@@ -826,6 +826,27 @@ inner join table_2 t2 on t1.tab_1_col_2 = t2.tab_2_col_2
 inner join table_3 t3 on t1.tab_1_col_2 = t3.tab_3_col_2;
 
 
+------------
+Cross Join
+------------
+
+select *
+from table_1 t1
+cross join table_2;
+
+
+
+-- 24-08-2026
+
+SELECT *   
+FROM production p
+JOIN products pr ON p.product_id = pr.product_id;
+
+-- views 
+
+SELECT *   
+FROM production p
+JOIN products pr ON p.product_id = pr.product_id;
 
 
 */

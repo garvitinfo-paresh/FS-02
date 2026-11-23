@@ -1,0 +1,748 @@
+vertical - scalling up  
+
+horizontal - scalling out
+
+SQL Terms       MongoDb Terms
+--------------------------------
+Databse         Database 
+Table           Collection
+Entity/Row      Document
+Column          Key/Field
+Joins           Embeded Documents
+
+Primary Key     Default Key [ _id
+] is provided by mongodbs     
+
+// create and active database 
+// switched to db college
+// create collection insde database
+db.createCollection("stud");
+
+ db.getName();
+
+-- to view all collections / tables
+college> show collections;
+stud
+
+college> db.createCollection("staff");
+{ ok: 1
+}
+
+college> show collections;
+staff
+stud
+
+Basic CRUD Operations
+-------------------------------------
+1. Create / Insert Documents(Record)
+-------------------------------------
+Synt
+----
+db.collection.insertOne();  - insert only one doc.
+db.collection.insertMany(); - insert many doc.
+db.collection.insert();     
+
+
+// db.stud.insertOne({sno:11,sname:"Raghav",course:"Node",fees:30000})
+// db.stud.insertOne({sno:12,sname:"Rajiv",course:"Python",fees:37500})
+// college> db.stud.insertOne({sno:11,sname:"Raghav",course:"Node",fees:30000});
+// {
+//   acknowledged: true,
+//   insertedId: ObjectId('6ab2a7c187b6dd4a18e53563')
+// }
+// college> db.stud.find()
+// [
+//   {
+//     _id: ObjectId('6ab2a7c187b6dd4a18e53563'),
+//     sno: 11,
+//     sname: 'Raghav',
+//     course: 'Node',
+//     fees: 30000
+//   }
+// ]
+// db.stud.insertOne({sno:13,sname:"Arjav",course:"Flutter",fees:25000})
+// db.stud.insertOne({sno:14,sname:"Ketan",course:"Python",fees:37500})
+// db.stud.insertOne({sno:15,sname:"Ragini",course:"Node",fees:30000})
+// db.stud.insertOne({sno:16,sname:"Sohel",course:"Angular",fees:45000})
+
+
+db.staff.insertMany([
+  {stno: 111,stname: "Kriti",subject: "Node",experience: 4
+  },
+  {stno: 112,stname: "Nayi",subject: "Python",experience: 5
+  },
+  {stno: 113,stname: "Nevel",subject: "C",experience: 1
+  },
+  {stno: 114,stname: "Abdul",subject: "Java",experience: 1
+  },
+  {stno: 115,stname: "Ram",subject: "Angular",experience: 2
+  },
+  {stno: 116,stname: "Chetan",subject: "React",experience: 3
+  }
+]);
+
+db.staff.find();
+
+
+db.staff.find().skip(3);
+db.staff.find().sort("_id");
+db.staff.find().sort({_id: -1
+});
+db.staff.find().limit(3);
+db.staff.find().count();
+
+
+----------
+Object_id
+----------
+
+primary like in sql 
+
+6ab2a7c187b6dd4a18e53563
+
+12 byte == 24 char
+
+4 byte - time stamp
+
+5 byte -> 3 - machin (host info )  
+    2 - process id
+   
+3 byte - random increamental value.   256*256*256
+
+
+--------------------------
+Comparison Query Operator  
+--------------------------  
+$eq     = 
+$ne     !=
+$gt     >
+$gte    >=
+$lt     <
+$lte    <=
+
+$in, $nin
+
+Syntax
+------
+db.collection.find({field: {$eq:value
+  }
+})
+
+db.stud.find({fees: {$eq: 30000
+  }
+})
+
+db.stud.find({fees: 30000
+})
+
+db.stud.find({fees: {$gte: 30000
+  }
+})
+
+db.stud.find({fees: {$lte: 40000
+  }
+}).count()
+
+
+----------
+books.json
+----------
+
+db.books.find({no_of_reviews: 3
+})
+db.books.find({
+  "author.profile.exp": 3
+})
+db.books.find({
+  "author.profile.exp": {$gt: 3
+  }
+})
+
+db.books.find({no_of_reviews: {$in: [
+      1,
+      4,
+      5
+    ]
+  }
+})
+db.books.find({no_of_reviews: {$nin: [
+      1,
+      4,
+      5
+    ]
+  }
+})
+
+--------------------------
+  Logical Query Operator  
+--------------------------  
+
+Syntax 
+------
+
+db.collection.find({<Log-Op>: [
+    {expression_1
+    },
+    {expression_2
+    },
+    {expression_3
+    },...,
+    {expression_n
+    }
+  ]
+})
+
+
+db.collection.find({$or: [
+    {expression_1
+    },
+    {expression_2
+    },
+    {expression_3
+    },...,
+    {expression_n
+    }
+  ]
+})
+
+$or $and $not 
+
+or - performs logical OR on array of two or more
+atleast one of the expression(confition)
+
+
+Qury ) no_of_reviews > 3 or tags include 'programming'
+
+db.books.find({$or: [
+    {no_of_reviews: {$gt: 3
+      }
+    },
+    {tags: "programming"
+    }
+  ]
+})
+
+db.books.find({$or: [
+    {no_of_reviews: {$gt: 3
+      }
+    },
+    {tags: "programming"
+    }
+  ]
+}).count()
+
+Q) select all doc where either no_of_reviews is less than 3 
+or downloadble true or profile contains atleast 3 books
+
+db.books.find({
+  "author.profile.exp": {$gt: 3
+  }
+})
+
+db.boos.find({$or: [
+    {no_of_reviews: {$lt: 3
+      }
+    },
+    {downloadable: true
+    },
+    {
+      "author.profile.exp": {$gte: 3
+      }
+    }
+  ]
+})
+
+db.books.find({$or: [
+    {no_of_reviews: {$lt: 3
+      }
+    },
+    {downloadable: true
+    },
+    {
+      "author.profile.books": {$gt: 3
+      }
+    }
+  ]
+})
+
+db.books.find({$and: [
+    {no_of_reviews: {$lt: 3
+      }
+    },
+    {downloadble: "true"
+    },
+    {
+      "author.profile.books": {$gte: 3
+      }
+    }
+  ]
+})
+
+
+db.books.find({$and: [
+    {no_of_reviews: {$gt: 3
+      }
+    },
+    {tags: "programming"
+    }
+  ]
+}).count()
+
+db.books.find({$nor: [
+    {no_of_reviews: {$gt: 3
+      }
+    },
+    {tags: "programming"
+    }
+  ]
+}).count()
+
+---------
+
+db.books.find({no_of_reviews: {$not: {$gt: 3
+    }
+  }
+})
+
+
+delete
+------
+
+db.collection.deleteOne()
+db.collection.deleteMany()
+
+db.stud.deleteOne5({fees: {$eq: 37500
+  }
+})
+db.stud.deleteMany({fees: {$eq: 37500
+  }
+})
+db.stud.deleteMany({})
+
+
+drop collection
+-------------
+
+db.collection.drop()
+db.stud.drop()
+
+db.dropDatabase()
+
+mongosh temp --eval db.dropDatabase()
+
+mongosh <database-name> --eval db.dropDatabase()
+
+
+json  -> Bson
+
+Datatype in  mongodb 
+---------------------------
+
+BSON Type       Numeric           Alias 
+---------------------------------------
+Double          1               double
+String          2               string
+Object          3               object
+Array           4               array
+BinaryData      5               binData
+Object_id       7               objectId
+Boolean         8               bool
+Date            9               date
+Null            10              null
+32 bit          16              NumberInt
+64 bit          18              NumberLong
+Deciamal128     19              decimal  
+
+
+db.temp.insertOne({contact: "9898989898"
+})
+db.temp.insertOne({contact: 9869856980
+})
+db.temp.insertOne({contact:NumberLong(9869856980)
+})
+db.temp.insertOne({contact:NumberInt(878754875487)
+})
+
+db.temp.find({contact: {$type: 18
+  }
+})
+
+db.temp.find({contact: {$type: "double"
+  }
+})
+
+Update
+--------
+
+syntax:
+db.collection.updateOne({filter
+},
+{$set: {upadate
+  }
+},
+{option
+})
+db.collection.updateMany({filter
+},
+{$set: {upadate
+  }
+},
+{option
+})
+
+db.staff.find()
+
+// db.staff.updateMany({$set:{subject:"Java"}}) --note valid
+db.staff.updateMany({},
+{$set: {subject: "Java Script"
+  }
+})
+db.staff.updateMany({stname: 'Ram'
+},
+{$set: {subject: "Java Script"
+  }
+})
+
+db.stud.replaceOne({instructor: "ragavan"
+},
+{ course: "Python",Durtion: "1 month",instructor: "ragavan"
+})
+db.stud.updateOne({instructor: "ragavan"
+},
+{$set: { test: "test"
+  }
+})
+db.stud.updateOne({instructor: "ragavan"
+},
+{$unset: { test: ""
+  }
+})
+
+
+db.stud.updateOne({course: "Flutter"
+},
+{$inc: {fees: 10000
+  }
+})
+db.stud.updateOne({course: "Flutt"
+},
+{$mul: {fees: 1.1
+  }
+})
+
+c.updateOne({},
+{$min: {fees: 50000
+  }
+})
+fees >            
+db.stud.updateOne({course: "Flutter"
+},
+{$max: {fees: 60000
+  }
+}) 
+fees <
+
+db.stud.find()
+
+db.stud.updateOne({sname: "Ramish"
+},
+{$set: { age: 30
+  }
+}) 
+db.stud.updateOne({sname: "Ramish"
+},
+{$set: { age: 30
+  }
+},
+{upsert: true
+}) 
+
+
+db.books.updateOne({
+  "author.callname": "Rama"
+},
+{$set: {
+    "author.profile.exp": 10
+  }
+})
+
+
+Evalution Query Operator
+------------------------
+$expr ,  $mod, 
+$regx, $jsonSchema $text $where 
+
+1.$expr
+
+db.createCollection("budget");
+db.badget.insertOne({cat: "food",budget: 1000,spent: 1200
+})
+db.badget.insertOne({cat: "Groccery",budget: 5000,spent: 7000
+})
+db.badget.insertOne({cat: "travel",budget: 10000,spent: 8000
+})
+db.badget.insertOne({cat: "ent",budget: 1200,spent: 1200
+})
+db.badget.insertOne({cat: "clothes",budget: 1000,spent: 1500
+})
+db.badget.insertOne({cat: "rent",budget: 0
+})
+db.badget.insertOne({cat: "rent",budget: 0,spent: 31
+})
+5 1
+
+db.collection.find({ $expr: { <$operator>: []
+  }
+})
+
+db.badget.find({$expr: {$lte: [
+      "budget",
+      "spent"
+    ]
+  }
+})
+
+
+// $mod 
+db.collections.find({Field: {$mode: [divisor,remainder
+    ]
+  })
+db.badget.find({spent: {$mod: [
+        5,
+        1
+      ]
+    }
+  })
+
+// projection
+  // ----------------------
+  // db.collection.find({},{})s
+db.collection.find({},
+  {projection field
+  })
+db.collection.find({filter
+  },
+  {projection field
+  })
+
+db.books.find({},
+  {no_of_reviews: 1
+  })
+db.books.find({no_of_reviews: {$gte: 3
+    }
+  },
+  {no_of_reviews: 1,_id: 0
+  })
+
+db.books.find({},
+  {})
+----------------------------------------------------------
+
+// Projection of Array 
+  // ----------------------
+
+db.createCollection("Student");
+
+db.student.insertOne({_id: 11,name: "Rahil",sem: 1,marks: [
+      50,
+      40,
+      50,
+      10
+    ]
+  });
+db.student.insertOne({_id: 12,name: "Aakash",sem: 1,marks: [
+      90,
+      40,
+      80,
+      10
+    ]
+  });
+db.student.insertOne({_id: 13,name: "Dhyana",sem: 1,marks: [
+      10,
+      50,
+      60,
+      50
+    ]
+  });
+db.student.insertOne({_id: 14,name: "kenny",sem: 1,marks: [
+      80,
+      80,
+      40,
+      90
+    ]
+  });
+db.student.insertOne({_id: 15,name: "Abir",sem: 1,marks: [
+      10,
+      50,
+      90,
+      25
+    ]
+  });
+db.student.insertOne({_id: 16,name: "Mahir",sem: 1,marks: [
+      88,
+      70,
+      10,
+      60
+    ]
+  });
+db.student.insertOne({_id: 17,name: "Tej",sem: 1,marks: [
+      60,
+      40,
+      20,
+      10
+    ]
+  });
+
+------------------
+
+db.student.find({marks: {$gte: 80
+    }
+  },
+  {_id: 0,marks: 1
+  })
+
+db.student.find({marks: {$gte: 90
+    }
+  },
+  {_id: 0,name: 1,marks: 1
+  })
+
+db.student.find({marks: {$gte: 90
+    }
+  },
+  {_id: 0,name: 1,
+    "marks.$": 1
+  })
+
+db.student.find({},
+  {_id: 0,name: 1,marks: 1
+  })
+
+slice
+-------
+
+db.collection.find({query
+  },
+  {<array>: {$slice:n
+    }
+  })
+n->
+from  first to positive n
+from last to negitive n
+if n is > count return all value
+
+db.collection.find({query
+  },
+  {<array>: {$slice: [n1,n2
+      ]
+    }
+  })
+n1 - numner to skip
+n2 - number to return
+
+
+db.student.find({},
+  {_id: 0,name: 1,marks: {$slice: 2
+    }
+  })
+
+db.student.find({},
+  {_id: 0,name: 1,marks: {$slice: 3
+    }
+  })
+
+db.student.find({},
+  {_id: 0,name: 1,marks: {$slice: [
+        1,
+        3
+      ]
+    }
+  })
+
+elemMatch
+------------
+db.student.find({},
+  {marks: {$elemMatch: {$gte: 90
+      }
+    }
+  }) 
+
+  {
+  "_id": 1,
+  "roles": [
+    { "role": "admin", "department": "engineering" },
+    { "role": "editor", "department": "finance" }
+  ]
+}
+
+  db.users.find({
+  roles: { 
+    $elemMatch: { role: "admin", department: "finance" } 
+  }
+})
+
+db.books.find({},{ tags:{$elemMatch:{tags:"database"}}})  
+
+
+
+db.inventory.find( {<condition> },{ "<array field>": {$elemMatch:{<field>:<condition>}} } )
+
+db.inventory.find( {},{qty:{$elemMatch:{ num: {"$gte":10}}},code:1,tags:1} )
+
+db.inventory.find( {},{qty:{$elemMatch:{ color: 'green'}}} )
+
+db.inventory.find( {"tags":"book"},{qty:{$elemMatch:{ num: {"$gte":10}}},code:1,tags:1} )
+
+db.inventory.find()
+-----------------
+aggregate
+-----------------
+
+
+1. Count the total number of books
+db.books.aggregate([{$count: "totalBooks"}])
+
+2. Find all downloadable books
+db.books.aggregate([ {$match: { downloadable: true } }, {$project: { _id: 0, title: 1, downloadable: 1 } }])
+
+3. Calculate the average number of reviews
+
+db.books.aggregate([ 
+  {$group: { _id: null, averageReviews: {$avg: "$no_of_reviews" } } }, 
+  {$project: { _id: 0, averageReviews: 1 } }
+ ])
+
+
+4. Find the book with the highest number of reviews
+db.books.aggregate([ 
+  {$sort: { no_of_reviews: -1 } }, 
+  {$limit: 1 }, 
+  {$project: { _id: 0, title: 1, no_of_reviews: 1 } }
+  ])
+
+5. Find the minimum and maximum reviews
+
+db.books.aggregate([
+  {$group: { _id: null, minimumReviews: {$min: "$no_of_reviews" }, 
+  maximumReviews: {$max: "$no_of_reviews" } }}
+])
+
+6. Display books with author experience greater than or equal to 5 years
+
+db.books.aggregate([
+  {
+    $match: {
+      "author.profile.exp": {
+        $gte: 5
+      }
+    }
+  },
+  {
+    $project: {
+      _id: 0,
+      title: 1,
+      authorName: "$author.name",
+      experience: "$author.profile.exp"
+    }
+  }
+])

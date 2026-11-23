@@ -1,0 +1,388 @@
+
+
+MongoDB is a source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas.
+
+MongoDB --> nosql , document 
+        -->cassandra,hbase
+sql -> RDMS 
+
+
+MongoDB Structure:
+------------------
+-> MongoDB Physical database contains several logical databases.
+-> Each database contains several collections. Collection is something
+    like table in relational database.
+-> Each collection contains several documents. Document is something
+like record/row in relational database.
+
+SQL Terms 		MongoDB Terms
+-----------------------------------------------------------------------
+Database 		Database
+Table 			Collection
+Entity/Row 		Document
+Column 			Key / Field
+Table Join 		Embedded Documents
+Primary Key 	        Primary Key (Default key _id provided by mongodb itself)
+
+Data Formats in MongoDB:
+------------------------
+10kb json: {name:'iant'}--->BSON and that BSON will be stored
+4kb End user/Developer will provide data in json form.
+In MongoDB server data will be stored in BSON Form.
+
+Key Characteristics of MongoDB database:
+----------------------------------------
+1. Installation and setup is very easy.
+2. All information related to a document will be stored in a single place.
+ To retrieve data, it is not required to perform join operations and
+hence retrieval is very fast.
+3. Documents are independent of each other and no schema. Hence
+we can store unstructured data like videos, audio files etc
+4. We can perform oprations like editing existing document, deleting
+document and inserting new documents very easily.
+5. Retrieval data is in the form of json which can be understandable by
+any programming language without any conversion (interoperability)
+6. We can store very huge amount of data and hence scalability is
+more
+
+MongoDB Shell vs MongoDB Server:
+--------------------------------
+Once we installed MongoDB, we will get MongoDB Shell and MongoDB
+Server.hese are Javascript based applications.
+MongoDB Shell is responsible to manage Server.               --> mongosh   
+
+Default Databases:
+------------------
+MongoDB Admin will use these default databases.
+> show dbs
+admin 0.000GB
+config 0.000GB
+local 0.000GB
+1. admin:
+---------
+admin database is used to store user authentication and authorization
+information like usernames,passwords,roles etc
+This database is used by administrators while creating,deleting and
+updating users and while assigning roles.
+
+2. config:
+----------
+To store configuration information of mongodb server.
+
+3. local:
+---------
+local database can be used by admin while performing replication
+process.
+
+db.version()
+db.help()
+db.showdbs
+use admin()
+
+How to create collection:
+-------------------------
+ db.crs
+{ "ok" : 1 }
+
+> use iant
+
+> show collections
+employees
+> db.getName()
+test
+
+> use iant
+switched to db newskill
+
+Create collection
+---------------------------------
+db.createCollection("stud")
+
+show collections        
+----------------------------------
+
+Basic CRUD Operations in simple way:
+------------------------------------
+1. C--->Create|Insert document
+------------------------------
+How to insert document into the collection
+db.collection.insertOne()
+db.collection.insertMany()
+db.collection.insert()
+
+
+db.stud.find()
+db.stud.insertOne({sno:111,sname:"Ram",fees:37500,course:"Node"})
+db.stud.insertOne({sno:112,sname:"Raj",fees:45000,course:"FullStack"})
+db.stud.insertOne({sno:113,sname:"a",fees:65000,course:"Django"})
+db.stud.insertOne({sno:114,sname:"b",fees:45000,course:"Node"})
+db.stud.insertOne({sno:115,sname:"c",fees:65000,course:"Flutter"})
+db.stud.insertOne({sno:116,sname:"d",fees:25000,course:"Python"})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("61efad80e88d73f5a4ca784f")
+}
+
+2. R--->Read / Retrieval Operation:
+------------------------------------
+db.collection.find() --->To get all documents present in the given
+collection
+db.collection.findOne() --->To get one document
+
+> db.stud.find()
+
+------------------------------------------------------------------------
+
+ db.stud.find({fees:3500});
+
+ db.test.insertMany([{},{},{}...])   
+    
+ db.test.insertMany([
+ {name:"Any", age:"21", status:"busy"},
+ {name:"Tony", age:"25", status:"busy"},
+ {name:"Bobby", age:"28", status:"online"},
+ {name:"Sonny", age:"28", status:"away"},
+ {name:"Cher", age:"20", status:"online"}
+])
+        
+
+db.test.find({}).skip(3)
+
+db.test.find({}).sort("name" )
+
+db.test.find({}).count()
+------------------------------------------------------------------------
+
+-------------------------------------------------------------------------
+
+db.books.find({"author.profile.courses": 2})
+db.books.find({tags: "programming"})
+-------------------------------------------------------------------------
+ObjectId:
+---------
+For every document, MongoDB Server will associate a unique id, which
+is nothing but ObjectId.
+It is something like primary key in relational databases.
+The ObjectId will be assigned to _id field.
+"_id" : ObjectId("5fe6ad34b195d71b16a713c8")
+
+ObjectId is not json type and it is of BSON type.
+ObjectId is of 12 bytes.
+
+1. The first 4 bytes represents the timestamp when this document was
+inserted.
+2. The next 3 bytes represents machine identifier( host name)
+3. The next 2 bytes represents process id.
+4. The last 3 bytes represents some random increment value.
+
+ db.stud.find()[0]._id
+
+
+------------------------------------------------------------------------------
+1. Comparison Query Operators:
+------------------------------
+$eq, $ne, $gt, $gte, $lt, $lte, 
+
+$in, $nin
+
+$eq ---> Equality:
+------------------
+The $eq operator matches documents where the value of the field is
+equal to specified value.
+
+Syntax: db.collection.find({ field: {$eq: value} })
+It is exactly same as
+db.collection.find({field: value}) ==>It is the short cut way
+
+Case-1: Equals to Specific Value:
+---------------------------------
+Q. Select all documents from books collection, where no_of_reviews
+is 3.
+> db.books.find({ no_of_reviews: { $eq: 3}})
+
+> db.books.find({ no_of_reviews: 3})
+Case-2: Field in Nested Document equals a value
+
+-------------------------------------------------
+
+Q. Select all documents from the books collection where author
+profile contains 2 courses?
+> db.books.find({"author.profile.courses": {$eq: 2}})
+> db.books.find({"author.profile.courses": 2})
+Case-3: Array element equals a value:
+
+-------------------------------------
+Q1. Read all documents from the books collection where 'tags' array
+contains 'database' element?
+> db.books.find({tags: {$eq: "database"}})
+> db.books.find({tags: "database"})
+Case-4: Equals Array Value directly:
+
+-------------------------------------
+
+Q. Select all documents from books collection where tags array is
+exactly equal to ["language","freeware","programming"].
+> db.books.find({tags: {$eq:["language","freeware","programming"]}})
+> db.books.find({tags: ["language","freeware","programming"]})
+
+$ne operator:
+-------------
+
+ne ---> means not equal
+We can use $ne operator to select all the documents where the value
+of the field is not equal to specified value.
+Syntax: db.collection.find({filed: {$ne: value}})
+Q. To select all documents from books collection where no_of_reviews
+is not equal to 3.
+> db.books.find({no_of_reviews: {$ne: 3}})
+Note: If the specified field not available, such documents also will be
+included in the result.
+$gt operator:
+
+-------------
+
+$gt ---> means greater than
+We can use $gt operator to select all documents where the value of
+field is greater than specified value.
+Syntax: db.collection.find({field: {$gt: value}})
+Q1. Select all documents from books collection where the
+no_of_reviews is greater than 3.
+> db.books.find({no_of_reviews: {$gt: 3}})
+$gte operator:
+
+--------------
+$gte ----> means greater than or equal to
+We can use $gte operator to select all documents where the value of
+field is greater than or equal to specified value.
+Syntax: db.collection.find({field: {$gte: value}})
+Q1. Select all documents from books collection where the
+no_of_reviews is greater than or equal to 3.
+> db.books.find({no_of_reviews: {$gte: 3}})
+$lt operator:
+
+-------------
+
+$lt ---> means less than
+We can use $lt operator to select all documents where the value of
+field is less than specified value.
+Syntax: db.collection.find({field: {$lt: value}})
+Q1. Select all documents from books collection where the
+no_of_reviews is less than 3.
+> db.books.find({no_of_reviews: {$lt: 3}})
+$lte operator:
+
+-------------
+
+$lte ---> means less than or equal to
+We can use $lte operator to select all documents where the value of
+field is less than or equal to specified value.
+Syntax: db.collection.find({field: {$lte: value}})
+Q1. Select all documents from books collection where the
+no_of_reviews is less than or equal to 3.
+> db.books.find({no_of_reviews: {$lte: 3}})
+$in operator:
+
+------------
+We can use $in operator to select all documents where the value of a
+field equals any value in the specified array.
+It is something like python membership operator.
+Syntax: db.collection.find({field: {$in: [value1,value2,...,valueN]}})
+Q1. Select all documents from the books collection where the
+no_of_reviews is 1 or 4 or 5?
+> db.books.find({no_of_reviews: {$in: [1,4,5]}})
+
+
+
+Logical Query Operators:
+------------------------
+$or, $nor, $and, $not
+
+$or operator:
+-------------
+
+$or performs logical OR operation on an array of two or more
+expressions(conditions) and selects the documents that satisfy
+atleast one of the expression(condition)
+
+db.collection.find($and:[{expression1},{expression2},{expression3}]) - should be all true
+db.collection.find($or:[{expression1},{expression2},{expression3}]) - should any true
+
+Syntax: {$or: [{expression1},{expression1},..{expressionN}]}
+
+Q1. Select all documents where either no_of_reviews >3 or tags array
+contains programming element?
+c1: {no_of_reviews: {$gt: 3}}
+c2: {tags: "programming"}
+
+> db.books.find({$or: [{no_of_reviews: {$gt: 3}}, {tags: "programming"}]})
+
+Q2. Select all documents where either no_of_reviews is less than 3 or
+downloadable is true or author profile contains atleast 2 books?
+
+c1: {"no_of_reviews": {$lt: 3}}
+c2: {"downloadable": true}
+c3: {"author.profile.books": {$gte: 2}}
+
+
+{no_of_reviews: {$lt: 3}}
+{downloadable: true}
+{"author.profile.books": {$gte: 2}}
+> db.books.find({$or: [{no_of_reviews: {$lt: 3}}, {downloadable: true}]})
+
+db.books.find({
+        $or: [{no_of_reviews: {$lt: 3}}, 
+        {downloadable: true},
+        {"author.profile.books": {$gte: 2}}]
+        })
+
+db.books.find({$or: [{no_of_reviews: {$lt: 3}}, {downloadable: true},{"author.profile.books": {$gte: 2}}]})
+
+$nor operator:
+--------------
+
+It is inverse of $or operator.
+
+$or --->Atleast one condition satisfied
+$nor --->neither condition satisfied i.e all conditions fails
+
+Syntax: {$nor: [{expression1},{expression1},..{expressionN}]}
+$nor performs a logical NOR operation on an array of one or more
+expressions(conditions) and selects the documents that fail all query
+expressions in the array.
+eg:
+c1: { no_of_reviews: {$gt: 3}}
+c2: { downloadable: true}
+
+> db.books.find({$nor: [{ no_of_reviews: {$gt: 3}}, { downloadable:true}]})
+It will select all documents where
+1. The no_of_reviews is less than or equal to 3 (i.e not greater than 3)
+AND
+2. downloadable is false
+3. documents does not conain no_of_reviews and downloadable fields
+Note: $or results + $nor results = total no of documents
+> db.books.find({$or: [{ no_of_reviews: {$gt: 3}}, { downloadable:true}]}).count()
+
+> db.books.find({$nor: [{ no_of_reviews: {$gt: 3}}, { downloadable:true}]}).count()
+
+> db.books.find().count()
+
+--------------------------------------------------------------
+$and operator:
+--------------
+$and performs logical AND operation on an array of one or more
+expressions and selects the documents that satisfy all expressions in
+the array. i.e all conditions should be satisfied.
+
+Syntax: {$and: [{expression1},{expression1},..{expressionN}]}
+
+
+Q. Select all documents where the no_of_reviews is greater than or
+equals to 3 and downloadable is true?
+c1: {no_of_reviews: {$gte: 3}}
+c2: {downloadable: true}
+
+> db.books.find({$and: [{no_of_reviews: {$gte: 3}}, {downloadable:true}]})
+
+db.books.find({$and :[{ no_of_reviews:{} },{}] })
+
+

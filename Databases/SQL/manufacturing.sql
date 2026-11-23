@@ -241,5 +241,124 @@ INNER JOIN production p ON p.product_id = pr.product_id
 -- Find products produced more than 10000 units
 
 
+Query1 - >  Query2
+
+-- products that have been produced
+
+select * 
+from products
+where product_id IN
+(select 
+  product_id
+from production);
+
+select * 
+from products
+where product_id NOT IN
+(select 
+  product_id
+from production);
+
+select * 
+from products pr
+where EXISTS
+(select 
+  product_id
+from production P
+where p.product_id = pr.product_id
+);
+
+  select * 
+  from products pr
+  where NOT EXISTS
+  (select 
+    product_id
+  from production P
+  where p.product_id = pr.product_id
+  );
+
+-- string handling 
+
+-- select product_name,
+-- LENGTH(product_name) as pr_name_len,
+-- UPPER(product_name) as pr_name_UPR,
+-- LOWER(product_name) as pr_name_LWR,
+-- REVERSE(product_name) as pr_name_REV,
+-- LPAD(product_name,15,'*') as pr_name_LPAD,
+-- RPAD(product_name,15,'-') as pr_name_RPAD,
+-- CONCAT(product_name,'-',category) as pr_name_NAME_CAT,
+-- TRIM('    test    ') as pr_trimed,
+-- SUBSTRING(product_name,5,5) as pr_name_pre,
+-- REPLACE(product_name,'_',' ') as pr_name_replace,
+-- Copy(product_name,'_',' ') as pr_name_replace,
+-- LEFT(product_name,5) as pr_name_LEFT,
+-- RIGHT(product_name,5) as pr_name_RIGHT
+-- from products;
+
+-- SELECT REPEAT('ABC', 3); 
+-- SELECT INSTR('ABC', 'B'); 
+
+
+-- like  - predicate
+-- last char b
+-- select * from products where  product_name like '%b';
+-- -- first char b
+-- select * from products where  product_name like 'b%';
+-- -- second char a
+-- select * from products where  product_name like '_a%';
+-- -- last second char a
+-- select * from products where  product_name like '%a_';
+
+-- 24-08-2026
+-- views 
+-- CREATE VIEW date_wise_total_production AS
+-- SELECT 
+--     p.produciton_date,
+--     sum(p.units_produced) as "Total Unit"
+-- FROM products pr
+-- JOIN production p ON p.product_id = pr.product_id
+-- JOIN machine m ON p.machine_id = m.machine_id
+-- join maintainance mt ON m.machine_id = mt.machine_id
+-- group by p.produciton_date;
+
+-- select * from date_wise_total_production;
+
+-- select table_name
+-- from information_schema.VIEWS
+-- where table_schema = 'manufacturing_db';  
+
+
+-- /sql
+-- SELECT FLOOR(MIN + (RAND() * (MAX - MIN + 1)));
+-- Example for a random number between 1 and 100:
+-- SELECT FLOOR(1 + (RAND() * 100));
+
+
+-- ACID - ATM Machine 
+
+-- Atomicity: The "all-or-nothing" rule. Every step in a transaction happens fully, or none of it happens. If one part fails, the system rolls back all previous changes.
+
+-- Consistency: The rule of valid states. A transaction moves the database from one valid set of rules and constraints to another. It never leaves the data half-updated or broken.
+
+-- Isolation: The rule of independent work. Multiple users can change data at the same time without messing up each other's work. Unfinished changes stay hidden until saved.
+
+-- Durability: The rule of permanent saving. Once a transaction is finished and saved (committed), it stays safe on the disk. A sudden system crash will not erase the data.
+
+
+-- tract 1 - a with b diposit 500 
+-- A - 1000         B - 1500
+-- read A 
+-- -500             read b  
+--                  write +500
+--                  ------------ 
+-- 500               2000   save 
+
+-- tract 2 - b with c diposit  500
+-- B - 1500        c - 1500
+-- read b 
+-- -2000             read c  
+--                  write +500
+--                  ------------ 
+--                   20000   save
 
 
