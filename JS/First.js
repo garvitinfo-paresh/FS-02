@@ -180,3 +180,112 @@
 // console.log(NaN == NaN)     //f
 // console.log(NaN  === NaN)   //f
 
+
+// ----------
+// 23-11-2026
+// ----------
+
+// Array - The Array object, as with arrays in other programming languages, enables storing a collection of multiple items under a single variable name.
+
+// [] 
+// index start from 0
+
+
+// let arr  = [];
+
+// console.log(typeof arr);
+// console.log(arr);
+
+// let arr1  = [1,2,'three',4.0,5.0,'six','SEVEN',8,9,'TEN'];
+// console.log(arr1);
+// console.log(arr1[0]);
+// console.log(arr1[3]);
+// console.log(typeof arr1[3]);
+// console.log(typeof arr1[5]);
+
+// console.log(arr1.length); //length - property
+
+// let arr1  = [10,20,30,40,50,60,70];
+
+// console.log(arr1)
+// console.log(arr1.length)
+
+// console.log(arr1[9])
+// arr1[9] = 100 
+// arr1[90] = 1000 
+
+// arr1[7] = undefined;
+// console.log(arr1)
+// console.log(arr1[7]==arr1[8])
+// console.log(arr1[7]===arr1[8])
+// console.log(arr1.length)
+
+// arr1['10'] = 100
+// arr1['a'] = 121
+// arr1['b'] = 131
+// console.log(arr1['b'])
+// console.log(arr1)
+// console.log(arr1.length)
+
+// 
+// let arr1 = [];
+
+// for(let i=0;i<10;i++)
+// {
+//     arr1[i] = i*10+10
+// }
+
+// console.log(arr1[9])
+// console.log(arr1[-3])
+
+// -------------------------------------
+//           array function
+// -------------------------------------
+
+// insert ->    push()  insert - Rear     unshift() insert - Front
+
+// delete ->    pop()       shift()
+
+
+// let arr1  = [30,40,50,60,70];
+
+// push()
+// push(element1)
+// push(element1, element2)
+// push(element1, element2, /* …, */ elementN)
+
+// console.log(arr1)
+// arr1.push() //no change
+// arr1.push(80)
+// arr1.push(90)
+// arr1.push(80,90)
+// arr1.push(80,90,100)
+
+// arr1.unshift(20)
+// arr1.unshift(10)
+// arr1.unshift(10,20)
+// console.log(arr1)
+
+// console.log(arr1)
+// arr1.pop()
+// arr1.pop()
+// arr1.shift()
+// arr1.shift()
+// console.log(arr1)
+
+// -------
+// delete - property
+// -------
+
+
+// let arr1  = [30,40,50,60,70];
+// console.log(arr1)
+// console.log(arr1.length)
+
+// delete arr1[0]
+// delete arr1[1]
+
+// console.log(arr1)
+// console.log(arr1.length)
+
+//delete never realese memory of deleted element
