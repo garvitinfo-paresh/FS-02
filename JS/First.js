@@ -289,3 +289,113 @@
 // console.log(arr1.length)
 
 //delete never realese memory of deleted element
+
+
+// ------------------
+// IMP - 24-11-2026 
+// ------------------
+
+// let arr1 = [100]
+
+// console.log(typeof([]));
+// console.log(typeof(" "));
+
+// console.log(arr1);
+
+// console.log(false == " ")
+// console.log([] == " ") //object empty - null
+// console.log(0 == " ") 
+// console.log([] == 0 ) 
+// console.log([] == false )
+
+
+// console.log( 0 == "0" ) 
+// console.log([] == 0 )
+
+// console.log([] == "0" )
+
+
+// ---------------------
+
+// let arr1 = [0];
+
+// console.log(arr1[0] == " ")
+// console.log(0 == " ") 
+
+// console.log(arr1[0] === " ")
+// console.log(arr1[0] === " ")
+
+
+// ----------------------------------------
+// splice
+// ----------------------------------------
+// The splice() method of Array instances changes the contents of an array by removing or replacing existing elements and/or adding new elements in place.
+
+
+// splice(start)
+// splice(start, deleteCount)
+// splice(start, deleteCount, item1)
+// splice(start, deleteCount, item1, item2)
+// splice(start, deleteCount, item1, item2, /* …, */ itemN)
+
+// -->
+//  0   1   2   3   4   5   6   7   8   9
+//  10  20  30  40  50  60  70  80  90  100
+//  -10 -9  -8  -7  -6  -5  -4  -3  -2  -1
+
+// let arr1 = [10,  20,  30,  40,  50,  60,  70,  80,  90,  100];
+
+// console.log(arr1);
+// arr1.splice(5)
+// arr1.splice(8)
+// arr1.splice(2)
+// arr1.splice(-3)
+// arr1.splice(-8)
+
+// arr1.splice(3,2)
+// arr1.splice(5,3)
+// arr1.splice(-4,3)
+// arr1.splice(-9,8)
+// arr1.splice(-9,-1)
+
+// arr1.splice(2,3,101)
+// let arr2 = arr1.splice(2,3,101,201,301,401)
+
+// console.log(arr1);
+// console.log(arr2);
+// ---------------------
+
+
+// ----------------------------------------
+// slice
+// ----------------------------------------
+
+// The slice() method of Array instances returns a shallow copy of a portion of an array into a new array object selected from start to end (end not included) where start and end represent the index of items in that array. The original array will not be modified.
+
+let arr = [10,  20,  30,  40,  50,  60,  70,  80,  90,  100];
+
+// let arr1 = arr;  ///aliasing --
+// let arr2 = arr;
+let arr1 = [...arr];
+let arr2 = [...arr];
+
+
+
+console.log(`--------Befor-----------`)
+console.log(`OGArray : ${arr}`)
+console.log(`Array 1 : ${arr1}`)
+console.log(`Array 2 : ${arr2}`)
+
+
+arr1.pop();
+arr1.pop();
+arr2.push(1000);
+arr2.push(2000);
+arr2.push(3000);
+
+console.log(`--------After-----------`)
+console.log(`OGArray : ${arr}`)
+console.log(`Array 1 : ${arr1}`)
+console.log(`Array 2 : ${arr2}`)
+
+
