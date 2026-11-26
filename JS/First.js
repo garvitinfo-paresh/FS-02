@@ -372,30 +372,118 @@
 
 // The slice() method of Array instances returns a shallow copy of a portion of an array into a new array object selected from start to end (end not included) where start and end represent the index of items in that array. The original array will not be modified.
 
-let arr = [10,  20,  30,  40,  50,  60,  70,  80,  90,  100];
 
-// let arr1 = arr;  ///aliasing --
-// let arr2 = arr;
-let arr1 = [...arr];
-let arr2 = [...arr];
+// slice()
+// slice(start)
+// slice(start, end)
 
 
+// let arr = [10,  20,  30,  40,  50,  60,  70,  80,  90,  100];
 
-console.log(`--------Befor-----------`)
-console.log(`OGArray : ${arr}`)
-console.log(`Array 1 : ${arr1}`)
-console.log(`Array 2 : ${arr2}`)
+//Deep Copy
+// // let arr1 = arr;  ///aliasing --
+// // let arr2 = arr;
+
+//Shallow Copy
+// let arr1 = [...arr];
+// let arr2 = [...arr];
+
+// let arr1 = arr.slice() 
+// let arr2 = arr.slice() 
+
+// console.log(`--------Befor-----------`)
+// console.log(`OGArray : ${arr}`)
+// console.log(`Array 1 : ${arr1}`)
+// console.log(`Array 2 : ${arr2}`)
 
 
-arr1.pop();
-arr1.pop();
-arr2.push(1000);
-arr2.push(2000);
-arr2.push(3000);
+// arr1.pop();
+// arr1.pop();
+// arr2.push(1000);
+// arr2.push(2000);
+// arr2.push(3000);
 
-console.log(`--------After-----------`)
-console.log(`OGArray : ${arr}`)
-console.log(`Array 1 : ${arr1}`)
-console.log(`Array 2 : ${arr2}`)
+// console.log(`--------After-----------`)
+// console.log(`OGArray : ${arr}`)
+// console.log(`Array 1 : ${arr1}`)
+// console.log(`Array 2 : ${arr2}`)
 
 
+
+// let arr = [10,  20,  30,  40,  50,  60,  70,  80,  90,  100];
+
+// let arr1 = [];
+// console.log(`OGArray : ${arr}`)
+// arr1  = arr.slice(2)
+// arr1  = arr.slice(5)
+// arr1  = arr.slice(2,8)
+// arr1  = arr.slice(2,-2)
+// arr1  = arr.slice(-7,7)
+// console.log(`Array 1 : ${arr1}`)
+
+// ------------------
+// function
+// ------------------
+
+// bussiness logic 
+// from ES 13 there are following type of functions
+
+// 1) named function
+// 2) anonymous function
+// 3) rest parameter in function
+// 4) default parameter  in function
+// 5) optional parameter  in function
+// --- adv.
+// 6) generators
+// 6) constructor
+// 6) IIFE - (Immediate Invokable Function Expression)
+
+// 1) named function
+// the fuction with the particular name called as named function
+
+// function defination
+// function calling
+
+// function defination
+// ------------------------
+
+// function fun-name(arg1,arg2,arg3,...,argn)
+// {
+    //  business logic
+    //  return 
+// }
+
+// function calling
+// ------------------
+// fun-name(param1,param2,param3,...,paramn)
+
+// console.log("1")
+// function myFunc()
+// {
+//     console.log("2")
+//     console.log("Hello, this is my Function..")
+//     console.log("3")
+// }
+// console.log("4")
+// myFunc()
+// // myFunc()
+// // myFunc()
+// console.log("5")
+
+// console.log("1")
+// function myFunc()
+// {
+//     console.log("2")
+//     return "Hello, this is my Function..";
+//     // console.log("3")
+// }
+// console.log("3")
+// console.log(myFunc())
+// console.log("4")
+
+
+// simple interest
+// palindrom number
+// total  1 to 10
+// string reverse
+// armstrong no. 
