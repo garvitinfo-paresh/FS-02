@@ -487,3 +487,75 @@
 // total  1 to 10
 // string reverse
 // armstrong no. 
+
+// --------------
+// 27-11-2026
+// --------------
+
+// let a=10,b=20;
+// function doSum()
+// {
+//     console.log(a+b)
+// }
+// doSum()
+// let a=100,b=200;
+// function doSum(a,b)
+// {
+//     // console.log(a+b)
+//     return a+b;
+// }
+// // doSum(10,20)
+// console.log(doSum(10,20))
+
+// ------------------------------------------
+
+// function funcOne(arg1,arg2,arg3)
+// {
+//     console.log(`${arg1} - ${arg2} - ${arg3}`)
+// }
+// funcOne("ReactJS","Node JS","MongoDB");
+// funcOne("ReactJS","Node JS");
+// funcOne();
+// funcOne(null);
+// funcOne("",'',"");
+
+// let  funcTwo  = function ()
+// {
+//     console.log(`inside funcTwo ...`)
+//     return "Hello-2";
+// }
+// let  funcOne  = function (xyz)
+// {
+//     console.log("inside func_1")
+//     // console.log(`funcOne Called...- ${xyz}`)
+//     return xyz;
+// }
+// console.log(typeof funcOne)
+// console.log(funcOne)
+// test("Hello")
+// console.log(test)
+// funcOne("fine")
+// console.log(funcTwo)
+// console.log(funcOne(funcTwo()))
+// console.log(funcOne(funcTwo()))
+
+// let x = funcOne(funcTwo());
+// console.log(x)
+
+// ----------------------------
+
+function doSquare(x)
+{
+    return x*x;
+}
+function doCube(y)
+{
+    return y*y*y;
+}
+
+function myFunc(a,b){
+    return a+b;
+}
+
+// console.log( myFunc(doSquare(2),doCube(3)))
+console.log( myFunc(doSquare,doCube))
